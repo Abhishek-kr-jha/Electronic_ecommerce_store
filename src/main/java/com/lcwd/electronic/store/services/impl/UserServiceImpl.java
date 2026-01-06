@@ -2,6 +2,7 @@ package com.lcwd.electronic.store.services.impl;
 
 import com.lcwd.electronic.store.dtos.UserDto;
 import com.lcwd.electronic.store.entities.User;
+import com.lcwd.electronic.store.exceptions.ResourceNotFoundException;
 import com.lcwd.electronic.store.repositories.UserRepository;
 import com.lcwd.electronic.store.services.UserService;
 
@@ -44,7 +45,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto updateUser(UserDto userDto, String userId) {
      User user =    userRepository.findById(userId)
-        .orElseThrow(()->new RuntimeException("user not found with given id!!"));
+        .orElseThrow(()->new ResourceNotFoundException("user not found with given id!!"));
         user.setName(userDto.getName());
         user.setAbout(userDto.getAbout());
         user.setGender(userDto.getGender());
@@ -63,7 +64,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(String userId) {
         User user =    userRepository.findById(userId)
-        .orElseThrow(()->new RuntimeException("user not found with given id!!"));
+        .orElseThrow(()->new ResourceNotFoundException("user not found with given id!!"));
         //delete user
         userRepository.delete(user);
 
@@ -82,7 +83,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto getUserById(String userId) {
       User user =   userRepository.findById(userId).
-        orElseThrow(()->new RuntimeException("user not found with given id !!"));
+        orElseThrow(()->new ResourceNotFoundException("user not found with given id !!"));
 
         return entityToDto(user);
     }
@@ -90,7 +91,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto getUserByEmail(String email) {
      User user =    userRepository.findByEmail(email)
-        .orElseThrow(()->new RuntimeException("user not found with given email and id and password !!"));
+        .orElseThrow(()->new ResourceNotFoundException("user not found with given email and id and password !!"));
         
         return entityToDto(user);
     }
