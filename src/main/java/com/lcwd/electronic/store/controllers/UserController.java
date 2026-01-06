@@ -2,6 +2,7 @@ package com.lcwd.electronic.store.controllers;
 
 import java.util.List;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +27,7 @@ public class UserController {
     private UserService userService;
     //create
     @PostMapping
-    public ResponseEntity<UserDto>createUser(@RequestBody UserDto userDto){
+    public ResponseEntity<UserDto>createUser(@Valid @RequestBody UserDto userDto){
       UserDto userDto1 =   userService.createUser(userDto);
         return new ResponseEntity<>(userDto1, HttpStatus.CREATED);
 
@@ -35,7 +36,7 @@ public class UserController {
     //update
 
     @PutMapping("/{userId}")
-    public ResponseEntity<UserDto>updateUser(@PathVariable("userId")String userId,
+    public ResponseEntity<UserDto>updateUser( @Valid @PathVariable("userId")String userId,
     @RequestBody UserDto userDto){
         UserDto updatedUserUserDto = userService.updateUser(userDto, userId);
         return new ResponseEntity<>(updatedUserUserDto,HttpStatus.OK);
