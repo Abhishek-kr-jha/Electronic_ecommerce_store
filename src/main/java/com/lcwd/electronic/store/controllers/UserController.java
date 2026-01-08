@@ -2,6 +2,7 @@ package com.lcwd.electronic.store.controllers;
 
 import java.util.List;
 
+import com.lcwd.electronic.store.dtos.PageableResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -48,7 +49,7 @@ public class UserController {
 
     //get All
     @GetMapping
-    public ResponseEntity<List<UserDto>>getAllUsers(
+    public ResponseEntity<PageableResponse<UserDto>>getAllUsers(
             @RequestParam( value ="pageNumber", defaultValue = "0", required = false) int pageNumber,
             @RequestParam(value = "pageSize",defaultValue = "10",required = true) int pageSize,
             @RequestParam( value ="sortBy", defaultValue = "name", required = false) String sortBy,

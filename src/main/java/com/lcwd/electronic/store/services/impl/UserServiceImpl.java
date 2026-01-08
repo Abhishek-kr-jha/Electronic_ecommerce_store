@@ -1,8 +1,10 @@
 package com.lcwd.electronic.store.services.impl;
 
+import com.lcwd.electronic.store.dtos.PageableResponse;
 import com.lcwd.electronic.store.dtos.UserDto;
 import com.lcwd.electronic.store.entities.User;
 import com.lcwd.electronic.store.exceptions.ResourceNotFoundException;
+import com.lcwd.electronic.store.helper.Helper;
 import com.lcwd.electronic.store.repositories.UserRepository;
 import com.lcwd.electronic.store.services.UserService;
 
@@ -48,8 +50,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto updateUser(UserDto userDto, String userId) {
-     User user =    userRepository.findById(userId)
-        .orElseThrow(()->new ResourceNotFoundException("user not found with given id!!"));
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("user not found with given id!!"));
         user.setName(userDto.getName());
         user.setAbout(userDto.getAbout());
         user.setGender(userDto.getGender());
@@ -59,7 +61,7 @@ public class UserServiceImpl implements UserService {
         //saved data
 
         User updatedUser = userRepository.save(user);
-        UserDto updatedDto  = entityToDto(updatedUser);
+        UserDto updatedDto = entityToDto(updatedUser);
 
 
         return updatedDto;
@@ -67,65 +69,64 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(String userId) {
-        User user =    userRepository.findById(userId)
-        .orElseThrow(()->new ResourceNotFoundException("user not found with given id!!"));
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("user not found with given id!!"));
         //delete user
         userRepository.delete(user);
 
     }
 
     @Override
-    public List<UserDto> getAllUsers(int pageNumber, int pageSize,String sortBy, String sortDir) {
-        Sort sort = (sortDir.equalsIgnoreCase("desc"))? (Sort.by(sortBy)).descending() :(Sort.by(sortBy).ascending());
+    public PageableResponse<UserDto> getAllUsers(int pageNumber, int pageSize, String sortBy, String sortDir) {
+        Sort sort = (sortDir.equalsIgnoreCase("desc")) ? (Sort.by(sortBy)).descending() : (Sort.by(sortBy).ascending());
 
-        Pageable pageable = PageRequest.of(pageNumber,pageSize,sort);
-      Page<User> page =   userRepository.findAll(pageable);
-      List<User>users = page.getContent();
-     List<UserDto>dtoList =  users.stream().map(user->entityToDto(user))
-      .collect(Collectors.toList());
-      return dtoList;
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
+        Page<User> page = userRepository.findAll(pageable);
+        Helper.getPageableResponse(page,UserDto.class);
+        PageableResponse<UserDto>response = Helper.getPageableResponse(page,UserDto.class);
+        return response;
 
-        
+
     }
 
     @Override
     public UserDto getUserById(String userId) {
-      User user =   userRepository.findById(userId).
-        orElseThrow(()->new ResourceNotFoundException("user not found with given id !!"));
+        User user = userRepository.findById(userId).
+                orElseThrow(() -> new ResourceNotFoundException("user not found with given id !!"));
 
         return entityToDto(user);
     }
 
     @Override
     public UserDto getUserByEmail(String email) {
-     User user =    userRepository.findByEmail(email)
-        .orElseThrow(()->new ResourceNotFoundException("user not found with given email and id and password !!"));
-        
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("user not found with given email and id and password !!"));
+
         return entityToDto(user);
     }
 
     @Override
     public List<UserDto> searchUser(String keyword) {
-        List<User>users = userRepository.findByNameContaining(keyword);
-         List<UserDto>dtoList =  users.stream().map(user->entityToDto(user))
-      .collect(Collectors.toList());
+        List<User> users = userRepository.findByNameContaining(keyword);
+        List<UserDto> dtoList = users.stream().map(user -> entityToDto(user))
+                .collect(Collectors.toList());
 
         return dtoList;
     }
 
     private UserDto entityToDto(User savedUser) {
-    //   UserDto userDto =   UserDto.builder()
-    //             .userId(savedUser.getUserId())
-    //             .name(savedUser.getName())
-    //             .email(savedUser.getEmail())
-    //             .password(savedUser.getPassword())
-    //             .about(savedUser.getAbout())
-    //             .gender(savedUser.getGender())
-    //             .imageName(savedUser.getImageName())
-    //             .build();
+        //   UserDto userDto =   UserDto.builder()
+        //             .userId(savedUser.getUserId())
+        //             .name(savedUser.getName())
+        //             .email(savedUser.getEmail())
+        //             .password(savedUser.getPassword())
+        //             .about(savedUser.getAbout())
+        //             .gender(savedUser.getGender())
+        //             .imageName(savedUser.getImageName())
+        //             .build();
 
 
-      return  mapper.map(savedUser, UserDto.class);
+        return mapper.map(savedUser, UserDto.class);
     }
 
     private User dtoToEntity(UserDto userDto) {
@@ -139,6 +140,6 @@ public class UserServiceImpl implements UserService {
         //         .imageName(userDto.getImageName())
         //         .build();
 
-        return  mapper.map(userDto,User.class);
+        return mapper.map(userDto, User.class);
     }
 }
