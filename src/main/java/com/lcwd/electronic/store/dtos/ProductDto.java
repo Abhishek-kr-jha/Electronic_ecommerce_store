@@ -1,5 +1,6 @@
 package com.lcwd.electronic.store.dtos;
 
+import com.lcwd.electronic.store.entities.Category;
 import jakarta.persistence.Column;
 import lombok.*;
 
@@ -30,5 +31,8 @@ public class ProductDto {
 
     private boolean stock;
     private  String productImage;
+    private CategoryDto category;
+
+
 
 }
