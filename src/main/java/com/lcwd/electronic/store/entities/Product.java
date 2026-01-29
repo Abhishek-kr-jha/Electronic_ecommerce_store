@@ -1,5 +1,6 @@
 package com.lcwd.electronic.store.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -40,6 +41,7 @@ public class Product {
     //mapping with category
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="category_id")
+    @JsonIgnore
     private  Category category;
 
 
