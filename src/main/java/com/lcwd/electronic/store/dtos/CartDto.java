@@ -1,8 +1,6 @@
 package com.lcwd.electronic.store.dtos;
 
 import com.lcwd.electronic.store.entities.CartItem;
-import com.lcwd.electronic.store.entities.User;
-import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.ArrayList;

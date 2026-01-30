@@ -9,7 +9,6 @@ import com.lcwd.electronic.store.dtos.PageableResponse;
 import com.lcwd.electronic.store.services.FileService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
-import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

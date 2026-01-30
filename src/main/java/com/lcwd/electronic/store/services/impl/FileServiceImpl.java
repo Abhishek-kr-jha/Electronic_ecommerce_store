@@ -1,6 +1,6 @@
 package com.lcwd.electronic.store.services.impl;
 
-import com.lcwd.electronic.store.exceptions.BadApiRequest;
+import com.lcwd.electronic.store.exceptions.BadApiRequestExceptions;
 import com.lcwd.electronic.store.services.FileService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,7 +39,7 @@ public class FileServiceImpl implements FileService {
             return  fileNameWithExtension;
 
         }else{
-            throw new BadApiRequest("File with this "+extension+" not allowed");
+            throw new BadApiRequestExceptions("File with this "+extension+" not allowed");
 
         }
 

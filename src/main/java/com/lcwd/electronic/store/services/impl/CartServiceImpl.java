@@ -6,7 +6,6 @@ import com.lcwd.electronic.store.entities.Cart;
 import com.lcwd.electronic.store.entities.CartItem;
 import com.lcwd.electronic.store.entities.Product;
 import com.lcwd.electronic.store.entities.User;
-import com.lcwd.electronic.store.exceptions.BadApiRequest;
 import com.lcwd.electronic.store.exceptions.ResourceNotFoundException;
 import com.lcwd.electronic.store.repositories.CartItemRepository;
 import com.lcwd.electronic.store.repositories.CartRepository;
@@ -66,7 +65,7 @@ public class CartServiceImpl  implements CartService {
      //perform cart operations
         // if cart items already present ; then update
         AtomicReference<Boolean>updated = new AtomicReference<>(false);
-       List<CartItem > items = cart.getItems();
+       List<CartItem> items = cart.getItems();
      List<CartItem>updatedItems = items.stream().map(item->{
          if(item.getProduct().getProductId().equals(productId)){
 //             item already present
