@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Getter
@@ -14,7 +15,7 @@ import java.util.List;
 
 @Entity
 @Table(name="users")
-public class User {
+public class User  {
     @Id
     private  String userId;
 
@@ -24,7 +25,7 @@ public class User {
     @Column(name = "users_email", unique = true)
     private  String email;
 
-    @Column(name = "users_password", length = 10)
+    @Column(name = "users_password", length = 500)
     private  String password;
     private  String gender;
 
